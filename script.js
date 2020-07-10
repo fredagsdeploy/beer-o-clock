@@ -4,16 +4,13 @@ function nextDate() {
   if(today.getDay() !== 5) {
     today.setDate(today.getDate() + (5 - 1 - today.getDay() + 7) % 7 + 1);
   }
-  today.setHours(15, 00, 00);
+  today.setHours(15, 0, 0);
   return today;
 }
 const target = nextDate().getTime();
 console.log(target);
 
-// countdown
-let timer = setInterval(function() {
-
-  // get today's date
+function render() {
   const today = new Date().getTime();
 
   // get the difference
@@ -24,7 +21,7 @@ let timer = setInterval(function() {
   let hours = Math.max(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)), 0);
   let minutes = Math.max(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)), 0);
   let seconds = Math.max(Math.floor((diff % (1000 * 60)) / 1000), 0);
-  
+
   // change timer to hype if necessary
   if (days + hours + minutes + seconds === 0) {
     days = "B";
@@ -44,5 +41,9 @@ let timer = setInterval(function() {
 <div class=\"seconds\"> \
   <div class=\"numbers\">" + seconds + "</div>seconds</div> \
 </div>";
+}
 
-}, 1000);
+render();
+
+// countdown
+setInterval(render, 1000);
