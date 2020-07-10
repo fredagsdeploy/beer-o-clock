@@ -24,6 +24,14 @@ let timer = setInterval(function() {
   let hours = Math.max(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)), 0);
   let minutes = Math.max(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)), 0);
   let seconds = Math.max(Math.floor((diff % (1000 * 60)) / 1000), 0);
+  
+  // change timer to hype if necessary
+  if (days + hours + minutes + seconds === 0) {
+    days = "B";
+    hours = "E";
+    minutes = "E";
+    seconds = "R";
+  }
 
   // display
   document.getElementById("timer").innerHTML =
