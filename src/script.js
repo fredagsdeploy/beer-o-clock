@@ -20,10 +20,10 @@ let timer = setInterval(function() {
   const diff = target - today;
 
   // math
-  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  let days = Math.max(Math.floor(diff / (1000 * 60 * 60 * 24)), 0);
+  let hours = Math.max(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)), 0);
+  let minutes = Math.max(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)), 0);
+  let seconds = Math.max(Math.floor((diff % (1000 * 60)) / 1000), 0);
 
   // display
   document.getElementById("timer").innerHTML =
