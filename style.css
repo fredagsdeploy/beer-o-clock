@@ -5,15 +5,8 @@ html {
 
 body {
   display: grid;
+  place-items: center;
   background: #fff;
-}
-
-.container {
-  position: relative;
-  margin: auto;
-  overflow: hidden;
-  width: 650px;
-  height: 480px;
 }
 
 h1 {
@@ -27,14 +20,24 @@ h1 {
 }
 
 #timer {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(4, 1fr);
   color: #C96E12;
   text-align: center;
   text-transform: uppercase;
   font-family: "Lato", sans-serif;
   font-size: .7em;
   letter-spacing: 5px;
-  margin-top: 25%;
 }
+
+@media (max-width: 600px) {
+  #timer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
 
 .days, .hours, .minutes, .seconds {
   display: inline-block;
