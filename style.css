@@ -44,6 +44,7 @@ h1 {
   padding: 20px;
   width: 100px;
   border-radius: 5px;
+  color: #fff;
 }
 
 .days {
@@ -52,7 +53,6 @@ h1 {
 
 .hours {
   background: #C96E12;
-  color: #fff;
 }
 
 .minutes {
@@ -61,7 +61,6 @@ h1 {
 
 .seconds {
   background: #EC9D00;
-  color: #fff;
 }
 
 .numbers {
@@ -84,38 +83,6 @@ h1 {
 .white .string {
   background: #C96E12;
   border: 1px solid #C96E12;
-}
-
-.red {
-  position: absolute;
-  background: #a9b6b6;
-  left: 18%;
-  top: 9%;
-  height: 65px;
-  width: 70px;
-}
-.red .triangle {
-  border-bottom: 14px solid #a9b6b6;
-}
-.red .string {
-  background: #a9b6b6;
-  border: 1px solid #a9b6b6;
-}
-
-.blue {
-  position: absolute;
-  background: #262f0d;
-  height: 80px;
-  width: 80px;
-  left: 60%;
-  top: 5%;
-}
-.blue .triangle {
-  border-bottom: 14px solid #262f0d;
-}
-.blue .string {
-  background: #262f0d;
-  border: 1px solid #262f0d;
 }
 
 footer {
