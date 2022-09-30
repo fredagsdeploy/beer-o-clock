@@ -1,12 +1,34 @@
+function getTimeParam() {
+  const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  });
+  const timeStr = params.t;
+  if (timeStr && timeStr.length === 4) {
+    const timeNbr = parseInt(timeStr, 10);
+    if (timeNbr && timeNbr >= 0 && timeNbr <= 2400) {
+      return {
+        hours: parseInt(timeStr.slice(0, 2)),
+        minutes: parseInt(timeStr.slice(2, 4))
+      }
+    }
+  }
+}
 
 function nextDate() {
   const today = new Date();
-  if(today.getDay() !== 5) {
+  if (today.getDay() !== 5) {
     today.setDate(today.getDate() + (5 - 1 - today.getDay() + 7) % 7 + 1);
   }
   today.setHours(15, 0, 0);
+
+  const timeParam = getTimeParam();
+  if(timeParam) {
+    today.setHours(timeParam.hours, timeParam.minutes, 0);
+  }
+
   return today;
 }
+
 const target = nextDate().getTime();
 console.log(target);
 
