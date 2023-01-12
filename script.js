@@ -1,59 +1,56 @@
-function getTimeParam() {
+function parseOptions() {
   const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
   });
-  const timeStr = params.t;
+
+  return { t: getTimeParam(params.t), d: getDateParam(params.d), b: getBeverageParam(params.b) }
+}
+
+function getTimeParam(timeStr) {
   if (timeStr && timeStr.length === 4) {
-    const timeNbr = parseInt(timeStr, 10);
+    const timeNbr = Number(timeStr);
     if (timeNbr && timeNbr >= 0 && timeNbr <= 2400) {
       return {
-        hours: parseInt(timeStr.slice(0, 2)),
-        minutes: parseInt(timeStr.slice(2, 4))
+        hours: Number(timeStr.slice(0, 2)),
+        minutes: Number(timeStr.slice(2, 4))
       }
     }
   }
+
+  return {
+    hours: 15,
+    minutes: 0
+  }
 }
 
-function getDateParam(){
-  const params = new Proxy(new URLSearchParams(window.location.search), {
-    get: (searchParams, prop) => searchParams.get(prop),
-  });
-  const dateStr = params.d;
+function getDateParam(dateStr){
   if (dateStr && dateStr.length === 8) {
-    const parts = dateStr.split('-');
+    const parts = dateStr.split('-').map(s => Number(s));
     if (parts.length === 3) {
-      const date = new Date(parts[0], parts[1] - 1, parts[2]);
-      return date
+      return new Date(parts[0], parts[1] - 1, parts[2]);
     }
   }
 }
 
-function getBeverageParam() {
-  const params = new Proxy(new URLSearchParams(window.location.search), {
-    get: (searchParams, prop) => searchParams.get(prop),
-  });
-  const beverageStr = params.b;
+function getBeverageParam(beverageStr) {
   if (beverageStr && beverageStr.length === 4) {
     return beverageStr.toUpperCase()
+  } else {
+    return "BEER";
   }
 }
 
+const options = parseOptions()
 
 function nextDate() {
   const today = new Date();
-  const dateParam = getDateParam();
-  if (dateParam){
-    today.setDate(dateParam.getDate()) 
-  }
-  else if (today.getDay() !== 5) {
+  if (options.d){
+    today.setDate(options.d.getDate())
+  } else if (today.getDay() !== 5) {
     today.setDate(today.getDate() + (5 - 1 - today.getDay() + 7) % 7 + 1);
   }
-  today.setHours(15, 0, 0);
-
-  const timeParam = getTimeParam();
-  if(timeParam) {
-    today.setHours(timeParam.hours, timeParam.minutes, 0);
-  }
+  const { hours, minutes } = options.t;
+  today.setHours(hours, minutes, 0);
 
   return today;
 }
@@ -63,7 +60,7 @@ console.log(target);
 
 function render() {
   const today = new Date().getTime();
-  const beverage = getBeverageParam() ?? "BEER"
+  const beverage = options.b;
 
   // get the difference
   const diff = target - today;
@@ -81,6 +78,8 @@ function render() {
     minutes = beverage[2];
     seconds = beverage[3];
   }
+
+  document.getElementById("header").textContent = beverage + " O'CLOCK"
 
   // display
   document.getElementById("timer").innerHTML =
